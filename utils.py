@@ -19,11 +19,15 @@ def prepareImage(img):
     return image
 
 def getHOGVector(img):
+
+    winSize= (30,30)
     winStride = (8, 8)
     padding = (8, 8)
     locations = ((0, 0),)
-    hog = cv2.HOGDescriptor()
-    return hog.compute(img,winStride,padding,locations)
+
+    #Tiene que cumplir (winSize.width - blockSize.width) % blockStride.width == 0 && (winSize.height - blockSize.height) % blockStride.height == 0
+    hog = cv2.HOGDescriptor(_winSize=(30,30),_blockSize=(15,15),_blockStride=(5,5),_cellSize=(5,5),_nbins=9)
+    return hog.compute(img)
 
 #def train()
 img = prepareImage(img)
