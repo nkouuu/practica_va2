@@ -9,20 +9,28 @@ def equalize(img):
     return clahe
     #cv2.waitKey(0)
 
-img = cv2.imread("train_recortadas/00/00000.ppm",0)
+img = cv2.imread("train_recortadas/00/00000.ppm",1)
 
 
 def prepareImage(img):
     img_cpy = img.copy()
-    image = cv2.resize(img_cpy,(30,30))
+    image = cv2.resize(img_cpy,(30,30),interpolation = cv2.INTER_AREA)
     image = equalize(image)
     return image
 
 def getHOGVector(img):
+    winStride = (8, 8)
+    padding = (8, 8)
+    locations = ((0, 0),)
     hog = cv2.HOGDescriptor()
-    return hog.compute(img)
+    return hog.compute(img,winStride,padding,locations)
 
-#img = prepareImage(img)
+#def train()
+img = prepareImage(img)
+img = cv2.resize(img.copy(),(30,30),interpolation = cv2.INTER_AREA)
 
 print(getHOGVector(img))
+
+
+
 cv2.waitKey(0)
