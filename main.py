@@ -37,8 +37,9 @@ def main():
             clasesPath.append(train_path+"/"+f)
         cl = Classifier([]).start(clasesPath)
         
-    except:
+    except Exception as e:
         print('Algo ha ido mal, por favor comprueba que tienes la version 3.6.x de Python y la version 3.x de OpenCV')
+        print(str(e))
     print('Deteccion finalizada.')
 
 main()

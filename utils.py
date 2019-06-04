@@ -15,8 +15,8 @@ img = cv2.imread("train_recortadas/00/00000.ppm",1)
 
 def prepareImage(img):
     img_cpy = img.copy()
-    image = cv2.resize(img_cpy,(30,30),interpolation = cv2.INTER_AREA)
-    image = equalize(image)
+    image = equalize(img_cpy)
+    image = cv2.resize(image,(30,30),interpolation = cv2.INTER_LINEAR)
     return image
 
 def vectorToList(vector):
@@ -28,22 +28,11 @@ def vectorToList(vector):
     return result_list.reshape(rows, columns)
 
 def getHOGVector(img):
-
-    winSize= (30,30)
-    winStride = (8, 8)
-    padding = (8, 8)
-    locations = ((0, 0),)
-
     #Tiene que cumplir (winSize.width - blockSize.width) % blockStride.width == 0 && (winSize.height - blockSize.height) % blockStride.height == 0
     hog = cv2.HOGDescriptor(_winSize=(30,30),_blockSize=(15,15),_blockStride=(5,5),_cellSize=(5,5),_nbins=9)
     return hog.compute(img)
 
-#def train()
-img = prepareImage(img)
-img = cv2.resize(img.copy(),(30,30),interpolation = cv2.INTER_AREA)
-
-print(getHOGVector(img))
 
 
 
-cv2.waitKey(0)
+

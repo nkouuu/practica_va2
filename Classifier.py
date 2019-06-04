@@ -2,6 +2,8 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 import cv2
 from utils import prepareImage, getHOGVector, vectorToList
 import os
+import numpy as np
+import matplotlib.pyplot as plt
 
 class Classifier:
     def __init__(self,classifier):
@@ -16,12 +18,16 @@ class Classifier:
             self.classify(folderPath)
 
         print(self.labels)
-        lda = LDA(n_components=2)
+        lda = LDA()
+
+        #Es necesario utilizar np.reshape ya que sklearn requiere datos de forma (row number, column number).
         samples_list = vectorToList(self.samples)
         print(samples_list)
-        reduced_data = lda.fit(samples_list, self.labels).transform(samples_list)
 
-        print('adsbfiubsdfuasbf', reduced_data)
+        reduced_data = lda.fit(samples_list, self.labels).transform(samples_list)
+        #HOG es float 32 y el transform de lda es float 64
+        reduced_data = reduced_data.astype(np.float32)
+        print(reduced_data)
 
     def classify(self,path):
         folders = path.split("/")
@@ -31,5 +37,4 @@ class Classifier:
             img = cv2.imread(path+"/"+imagePath, 1)
             prep_img = prepareImage(img)
             self.samples.append(getHOGVector(prep_img))
-
-        self.labels.append(label)
+            self.labels.append(label)
