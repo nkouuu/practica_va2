@@ -1,7 +1,6 @@
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 import cv2
-import numpy as np
-from utils import prepareImage,getHOGVector
+from utils import prepareImage, getHOGVector, vectorToList
 import os
 
 class Classifier:
@@ -15,11 +14,18 @@ class Classifier:
     def start(self,clasesFolders):
         for folderPath in clasesFolders:
             self.classify(folderPath)
-        print(self.samples)
+
         print(self.labels)
+        lda = LDA(n_components=2)
+        samples_list = vectorToList(self.samples)
+        print(samples_list)
+        reduced_data = lda.fit(samples_list, self.labels).transform(samples_list)
+
+        print('adsbfiubsdfuasbf', reduced_data)
+
     def classify(self,path):
         folders = path.split("/")
-        label = folders[len(folders)-1]
+        label = int(folders[len(folders)-1])
         for imagePath in os.listdir(path):
             print(imagePath)
             img = cv2.imread(path+"/"+imagePath, 1)

@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 
 # Equalizacion de la imagen usando un equalizado adaptativo
 def equalize(img):
@@ -17,6 +18,14 @@ def prepareImage(img):
     image = cv2.resize(img_cpy,(30,30),interpolation = cv2.INTER_AREA)
     image = equalize(image)
     return image
+
+def vectorToList(vector):
+
+    result_list = np.array(vector)
+
+    #Tupla con las dimensiones del array
+    rows, columns, i = result_list.shape
+    return result_list.reshape(rows, columns)
 
 def getHOGVector(img):
 
