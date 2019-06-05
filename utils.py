@@ -19,9 +19,9 @@ def prepareImage(img):
     image = cv2.resize(image,(30,30),interpolation = cv2.INTER_LINEAR)
     return image
 
-def vectorToList(vector):
+def reshapeList(list):
 
-    result_list = np.array(vector)
+    result_list = np.array(list)
 
     #Tupla con las dimensiones del array
     rows, columns, i = result_list.shape

@@ -1,6 +1,6 @@
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 import cv2
-from utils import prepareImage, getHOGVector, vectorToList
+from utils import prepareImage, getHOGVector, reshapeList
 import os
 import numpy as np
 import matplotlib.pyplot as plt
@@ -21,7 +21,7 @@ class Classifier:
         lda = LDA()
 
         #Es necesario utilizar np.reshape ya que sklearn requiere datos de forma (row number, column number).
-        samples_list = vectorToList(self.samples)
+        samples_list = reshapeList(self.samples)
         print(samples_list)
 
         reduced_data = lda.fit(samples_list, self.labels).transform(samples_list)
