@@ -17,7 +17,7 @@ def main():
     arguments = parser.parse_args()
     train_path = "train_recortadas"
     test_path = "test_reconocimiento"
-    classifier ="lda"
+    classifier ="PCA-BAYES"
     if(arguments.train):
         arguments.train
     if (arguments.detector):
@@ -35,10 +35,15 @@ def main():
         trainClassesPath = []
         for f in os.listdir(train_path):
             trainClassesPath.append(train_path+"/"+f)
-        cl = Classifier("LDA-BAYES")
-        classifier_result, test_img_names, test_labels, test_accuracy = cl.start(trainClassesPath, test_path)
-        graphics = Graphics(classifier_result, test_labels, test_accuracy, classifier)
-        graphics.accuracy_graphic()
+        cl = Classifier("PCA-BAYES")
+        classifier_result, test_img_names, test_labels, test_accuracy, train_accuracy = cl.start(trainClassesPath, test_path)
+
+        # Graficos
+        graphics = Graphics()
+        graphics.accuracy_graphic(train_accuracy, "Entrenamiento " + classifier)
+        graphics.accuracy_graphic(test_accuracy, "Test " + classifier)
+
+        # Escribir resultados
         writeInFile("resultado.txt", test_img_names, classifier_result)
         
     except Exception as e:

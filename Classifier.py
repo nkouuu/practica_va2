@@ -55,7 +55,7 @@ class Classifier:
         test_accuracy = self.get_accuracy(test_result, self.test_labels);
         print(f'Precisión de la predicción del test: {test_accuracy} - {"{0:.2f}".format(test_accuracy*100)}%')
 
-        return test_result, self.test_img_names, self.test_labels, test_accuracy*100
+        return test_result, self.test_img_names, self.test_labels, test_accuracy*100, train_accuracy*100
 
     def classify(self,path, type):
         if type == "train":
