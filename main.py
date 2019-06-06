@@ -5,6 +5,7 @@ import cv2
 import argparse
 from utils import writeInFile
 from Classifier import Classifier
+from Graphics import  Graphics
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--test')
@@ -35,12 +36,14 @@ def main():
         for f in os.listdir(train_path):
             trainClassesPath.append(train_path+"/"+f)
         cl = Classifier("LDA-BAYES")
-        classifier_result, test_img_names = cl.start(trainClassesPath, test_path)
+        classifier_result, test_img_names, test_labels, test_accuracy = cl.start(trainClassesPath, test_path)
+        graphics = Graphics(classifier_result, test_labels, test_accuracy, classifier)
+        graphics.accuracy_graphic()
         writeInFile("resultado.txt", test_img_names, classifier_result)
         
     except Exception as e:
         print('Algo ha ido mal, por favor comprueba que tienes la version 3.6.x de Python y la version 3.x de OpenCV')
         print(str(e))
-    print('Deteccion finalizada.')
+    print('Reconocimiento finalizado. Resultados escritos en resultados.txt')
 
 main()

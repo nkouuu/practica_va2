@@ -10,7 +10,7 @@ def equalize(img):
     clahe = eq.apply(grey)
     return clahe
 
-
+# Tratamiento y escalado de la imagen
 def prepareImage(img):
     img_cpy = img.copy()
     image = equalize(img_cpy)

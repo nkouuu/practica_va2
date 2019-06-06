@@ -1,12 +1,12 @@
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 from sklearn.decomposition import PCA
-from sklearn.metrics import accuracy_score, average_precision_score
+from sklearn.metrics import accuracy_score
 import cv2
 from utils import prepareImage, getHOGVector, reshapeList
 import os
 import numpy as np
 from sklearn.naive_bayes import GaussianNB
-import matplotlib.pyplot as plt
+
 
 
 class Classifier:
@@ -55,7 +55,7 @@ class Classifier:
         test_accuracy = self.get_accuracy(test_result, self.test_labels);
         print(f'Precisión de la predicción del test: {test_accuracy} - {"{0:.2f}".format(test_accuracy*100)}%')
 
-        return test_result, self.test_img_names
+        return test_result, self.test_img_names, self.test_labels, test_accuracy*100
 
     def classify(self,path, type):
         if type == "train":
