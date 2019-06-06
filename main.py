@@ -3,8 +3,7 @@ import subprocess
 import os
 import cv2
 import argparse
-from lda import LDA
-from utils import equalize
+from utils import writeInFile
 from Classifier import Classifier
 
 parser = argparse.ArgumentParser()
@@ -35,7 +34,9 @@ def main():
         trainClassesPath = []
         for f in os.listdir(train_path):
             trainClassesPath.append(train_path+"/"+f)
-        cl = Classifier("PCA-BAYES").start(trainClassesPath, test_path)
+        cl = Classifier("LDA-BAYES")
+        classifier_result, test_img_names = cl.start(trainClassesPath, test_path)
+        writeInFile("resultado.txt", test_img_names, classifier_result)
         
     except Exception as e:
         print('Algo ha ido mal, por favor comprueba que tienes la version 3.6.x de Python y la version 3.x de OpenCV')

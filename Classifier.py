@@ -21,8 +21,8 @@ class Classifier:
         elif classifier == 'PCA-BAYES':
             self.classifier = PCA()
             self.bayes_classifier = GaussianNB()
-
         self.classifier_type = classifier
+        self.test_img_names = []
         print('Clasifier initialized!')
 
     def start(self, train_classes_folders, test_folder):
@@ -43,7 +43,7 @@ class Classifier:
 
         # Obtener la precision de la prediccion
         train_accuracy = self.get_accuracy(train_result, self.train_labels);
-        print("Precisión de la predicción del entrenamiento: ", train_accuracy)
+        print(f'Precisión de la predicción del entrenamiento: {train_accuracy} - {train_accuracy*100}%')
 
         # Test
         test_samples_list = self.prepare_test(self.test_samples)
@@ -53,7 +53,9 @@ class Classifier:
             test_result = self.bayes_classifier.predict(test_samples_list)
         
         test_accuracy = self.get_accuracy(test_result, self.test_labels);
-        print("Precisión de la predicción del test: ", test_accuracy)
+        print(f'Precisión de la predicción del test: {test_accuracy} - {"{0:.2f}".format(test_accuracy*100)}%')
+
+        return test_result, self.test_img_names
 
     def classify(self,path, type):
         if type == "train":
@@ -67,6 +69,7 @@ class Classifier:
         elif type == "test":
             for imagePath in os.listdir(path):
                 if imagePath != ".directory":  # Error al leer imagenes
+                    self.test_img_names.append(imagePath)
                     label = int(imagePath[:2])
                     img = cv2.imread(path+"/"+imagePath, 1)
                     prep_img = prepareImage(img)
@@ -77,7 +80,7 @@ class Classifier:
         # Es necesario utilizar np.reshape ya que sklearn requiere datos de forma (row number, column number).
         samples_list = reshapeList(samples)
         if self.classifier_type == 'LDA-BAYES':
-            reduced_data = self.classifier.fit(samples_list, np.array(labels)).transform(samples_list)
+            reduced_data = self.classifier.fit_transform(samples_list, np.array(labels))
         elif self.classifier_type == 'PCA-BAYES':
             reduced_data = self.classifier.fit_transform(samples_list)
 
@@ -95,4 +98,3 @@ class Classifier:
         result = reshapeList(samples)
         result = self.classifier.transform(result)
         return result.astype(np.float32)
-
