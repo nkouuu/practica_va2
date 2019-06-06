@@ -35,7 +35,7 @@ def main():
         trainClassesPath = []
         for f in os.listdir(train_path):
             trainClassesPath.append(train_path+"/"+f)
-        cl = Classifier([]).start(trainClassesPath, test_path)
+        cl = Classifier("PCA-BAYES").start(trainClassesPath, test_path)
         
     except Exception as e:
         print('Algo ha ido mal, por favor comprueba que tienes la version 3.6.x de Python y la version 3.x de OpenCV')

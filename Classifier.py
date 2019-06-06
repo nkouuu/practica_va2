@@ -1,20 +1,28 @@
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+from sklearn.decomposition import PCA
 from sklearn.metrics import accuracy_score, average_precision_score
 import cv2
 from utils import prepareImage, getHOGVector, reshapeList
 import os
 import numpy as np
+from sklearn.naive_bayes import GaussianNB
 import matplotlib.pyplot as plt
 
 
 class Classifier:
-    def __init__(self,classifier):
+    def __init__(self, classifier):
         self.train_samples = []
         self.train_labels = []
         self.test_samples = []
         self.test_labels = []
-        self.classifier = classifier
-        self.lda = LDA()
+        if classifier == 'LDA-BAYES':
+            self.classifier = LDA()
+            self.lda = LDA()
+        elif classifier == 'PCA-BAYES':
+            self.classifier = PCA()
+            self.bayes_classifier = GaussianNB()
+
+        self.classifier_type = classifier
         print('Clasifier initialized!')
 
     def start(self, train_classes_folders, test_folder):
@@ -22,22 +30,29 @@ class Classifier:
             self.classify(folderPath, "train")
 
         self.classify(test_folder, "test")
-        self.classifier = LDA()
+
 
         # Reducir dimensionalidad
         reduced_data = self.reduce_dimensionality(self.train_samples, self.train_labels)
 
         # Train classifier
-        lda_train_result = self.train_classifier(reduced_data)
+        if self.classifier_type == 'LDA-BAYES':
+            train_result = self.train_classifier(reduced_data, self.lda)
+        elif self.classifier_type == 'PCA-BAYES':
+            train_result = self.train_classifier(reduced_data, self.bayes_classifier)
+
         # Obtener la precision de la prediccion
-        train_accuracy = self.get_accuracy(lda_train_result, self.train_labels);
+        train_accuracy = self.get_accuracy(train_result, self.train_labels);
         print("Precisión de la predicción del entrenamiento: ", train_accuracy)
 
         # Test
         test_samples_list = self.prepare_test(self.test_samples)
-        lda_test_result = self.lda.predict(test_samples_list)
-        print(lda_test_result)
-        test_accuracy = self.get_accuracy(lda_test_result, self.test_labels);
+        if self.classifier_type == 'LDA-BAYES':
+            test_result = self.lda.predict(test_samples_list)
+        elif self.classifier_type == 'PCA-BAYES':
+            test_result = self.bayes_classifier.predict(test_samples_list)
+        
+        test_accuracy = self.get_accuracy(test_result, self.test_labels);
         print("Precisión de la predicción del test: ", test_accuracy)
 
     def classify(self,path, type):
@@ -61,22 +76,23 @@ class Classifier:
     def reduce_dimensionality(self, samples, labels):
         # Es necesario utilizar np.reshape ya que sklearn requiere datos de forma (row number, column number).
         samples_list = reshapeList(samples)
-        reduced_data = self.classifier.fit(samples_list, np.array(labels)).transform(samples_list)
+        if self.classifier_type == 'LDA-BAYES':
+            reduced_data = self.classifier.fit(samples_list, np.array(labels)).transform(samples_list)
+        elif self.classifier_type == 'PCA-BAYES':
+            reduced_data = self.classifier.fit_transform(samples_list)
 
         # HOG es float 32 y el transform de lda es float 64
         return reduced_data.astype(np.float32)
 
-    def train_classifier(self, reduced_data):
-        self.lda.fit(reduced_data, np.array(self.train_labels))
-        LDA(priors=None)
-        return self.lda.predict(reduced_data)
+    def train_classifier(self, reduced_data, classifier):
+        classifier.fit(reduced_data, np.array(self.train_labels))
+        return classifier.predict(reduced_data)
 
     def get_accuracy(self, samples, labels):
         return accuracy_score(np.array(labels), samples)
     
     def prepare_test(self, samples):
         result = reshapeList(samples)
-        print(result)
         result = self.classifier.transform(result)
         return result.astype(np.float32)
 
