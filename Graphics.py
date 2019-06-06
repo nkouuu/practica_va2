@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
-from sklearn.metrics import precision_recall_curve
-from inspect import signature
+from sklearn.metrics import confusion_matrix
+import numpy as np
+import pandas as pd
+import seaborn as sn
+
 
 class Graphics:
 
@@ -17,3 +20,9 @@ class Graphics:
         plt.title(f'Resultados {title}')
         plt.show()
 
+    def conf_matrix(self, classifier_result, labels):
+        df_confusion = confusion_matrix(labels, classifier_result, labels=list(range(0, 42)))
+        df_cm = pd.DataFrame(df_confusion, index = [i for i in range(0, len(df_confusion))], columns = [i for i in range(0, len(df_confusion))])
+        plt.figure(figsize = (10,7))
+        sn.heatmap(df_cm, annot=True)
+        plt.show()

@@ -42,6 +42,7 @@ def main():
         graphics = Graphics()
         graphics.accuracy_graphic(train_accuracy, "Entrenamiento " + classifier)
         graphics.accuracy_graphic(test_accuracy, "Test " + classifier)
+        graphics.conf_matrix(classifier_result, test_labels)
 
         # Escribir resultados
         writeInFile("resultado.txt", test_img_names, classifier_result)
