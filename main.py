@@ -16,7 +16,7 @@ parser.add_argument('--detector')
 def main():
     arguments = parser.parse_args()
     train_path = "train_recortadas"
-    test_path = "test"
+    test_path = "test_reconocimiento"
     classifier ="lda"
     if(arguments.train):
         arguments.train
@@ -32,10 +32,10 @@ def main():
     #imagenes = os.listdir(test_path)
 
     try:
-        clasesPath = []
+        trainClassesPath = []
         for f in os.listdir(train_path):
-            clasesPath.append(train_path+"/"+f)
-        cl = Classifier([]).start(clasesPath)
+            trainClassesPath.append(train_path+"/"+f)
+        cl = Classifier([]).start(trainClassesPath, test_path)
         
     except Exception as e:
         print('Algo ha ido mal, por favor comprueba que tienes la version 3.6.x de Python y la version 3.x de OpenCV')
