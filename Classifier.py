@@ -1,4 +1,5 @@
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+from sklearn.metrics import accuracy_score, average_precision_score
 import cv2
 from utils import prepareImage, getHOGVector, reshapeList
 import os
@@ -17,14 +18,19 @@ class Classifier:
         for folderPath in clasesFolders:
             self.classify(folderPath)
 
-        print(self.labels)
         self.classifier = LDA()
 
-        #Reduce dimensionality
+        # Reduce dimensionality
         reduced_data = self.reduce_dimensionality(self.samples, self.labels)
-        #Train classifier
+
+        # Train classifier
         lda_result = self.train_classifier(reduced_data)
         print(lda_result)
+
+        # Get prediction accuracy
+        train_accuracy = self.get_accuracy(self.labels, lda_result);
+        print("Precisión de la predicción del entrenamiento: ", train_accuracy)
+
 
     def classify(self,path):
         folders = path.split("/")
@@ -48,3 +54,6 @@ class Classifier:
     def train_classifier(self, reduced_data):
         self.classifier.fit(reduced_data, self.labels)
         return self.classifier.predict(reduced_data)
+
+    def get_accuracy(self, samples, labels):
+        return accuracy_score(np.array(labels), samples)
