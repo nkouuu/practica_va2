@@ -17,7 +17,7 @@ def main():
     arguments = parser.parse_args()
     train_path = "train_recortadas"
     test_path = "test_reconocimiento"
-    classifier ="PCA-BAYES"
+    classifier ="LDA-BAYES"
     if(arguments.train):
         arguments.train
     if (arguments.detector):
@@ -35,7 +35,7 @@ def main():
         trainClassesPath = []
         for f in os.listdir(train_path):
             trainClassesPath.append(train_path+"/"+f)
-        cl = Classifier("PCA-BAYES")
+        cl = Classifier("LDA-BAYES")
         classifier_result, test_img_names, test_labels, test_accuracy, train_accuracy = cl.start(trainClassesPath, test_path)
 
         # Graficos
