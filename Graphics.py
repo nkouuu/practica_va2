@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score
 import numpy as np
 import pandas as pd
 import seaborn as sn
@@ -21,8 +21,15 @@ class Graphics:
         plt.show()
 
     def conf_matrix(self, classifier_result, labels):
+        # https://stackoverflow.com/questions/35572000/how-can-i-plot-a-confusion-matrix
         df_confusion = confusion_matrix(labels, classifier_result, labels=list(range(0, 42)))
         df_cm = pd.DataFrame(df_confusion, index = [i for i in range(0, len(df_confusion))], columns = [i for i in range(0, len(df_confusion))])
         plt.figure(figsize = (10,7))
         sn.heatmap(df_cm, annot=True)
         plt.show()
+
+    def get_f1_score(self, samples, labels):
+        precision = precision_score(labels, samples, average='micro')
+        recall = recall_score(labels, samples, average='micro')
+        f1score = f1_score(labels, samples, average='micro')
+        print(f'F1_score test samples: {f1score}')
