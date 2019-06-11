@@ -10,7 +10,7 @@ from Graphics import  Graphics
 parser = argparse.ArgumentParser()
 parser.add_argument('--test')
 parser.add_argument('--train')
-parser.add_argument('--detector')
+parser.add_argument('--classifier')
 
 
 def main():
@@ -19,9 +19,9 @@ def main():
     test_path = "test_reconocimiento"
     classifier ="LDA-BAYES"
     if(arguments.train):
-        arguments.train
-    if (arguments.detector):
-        print('Detectado parametro classifier.\nSolo esta disponible el classifier por defecto.')
+        train_path = arguments.train
+    if (arguments.classifier):
+        print('Detectado parametro classifier: '+arguments.classifier)
         classifier = arguments.classifier
     elif(arguments.test):
         test_path = arguments.test
@@ -35,7 +35,7 @@ def main():
         trainClassesPath = []
         for f in os.listdir(train_path):
             trainClassesPath.append(train_path+"/"+f)
-        cl = Classifier("LDA-BAYES")
+        cl = Classifier(classifier)
         classifier_result, test_img_names, test_labels, test_accuracy, train_accuracy = cl.start(trainClassesPath, test_path)
 
         # Graficos
