@@ -3,6 +3,9 @@ import subprocess
 import os
 import cv2
 import argparse
+import shutil
+import matplotlib as plt
+from detector import getSignalsFromImg
 from utils import writeInFile
 from Classifier import Classifier
 from Graphics import  Graphics
@@ -10,21 +13,24 @@ from Graphics import  Graphics
 parser = argparse.ArgumentParser()
 parser.add_argument('--test')
 parser.add_argument('--train')
-parser.add_argument('--detector')
-
+parser.add_argument('--classifier')
+parser.add_argument('--img_path')
 
 def main():
     arguments = parser.parse_args()
     train_path = "train_recortadas"
     test_path = "test_reconocimiento"
     classifier ="LDA-BAYES"
+    imgPath = None
     if(arguments.train):
-        arguments.train
-    if (arguments.detector):
-        print('Detectado parametro classifier.\nSolo esta disponible el classifier por defecto.')
+        train_path = arguments.train
+    if (arguments.classifier):
+        print('Detectado parametro classifier: '+arguments.classifier)
         classifier = arguments.classifier
-    elif(arguments.test):
+    if(arguments.test):
         test_path = arguments.test
+    if (arguments.img_path):
+        imgPath = arguments.img_path
     print("The script has " +str(3)+' arguments:')
     print("Train path: " +str(train_path)+'.')
     print("Test path: " +str(test_path)+'.')
@@ -35,8 +41,23 @@ def main():
         trainClassesPath = []
         for f in os.listdir(train_path):
             trainClassesPath.append(train_path+"/"+f)
-        cl = Classifier("LDA-BAYES")
+        cl = Classifier(classifier)
         classifier_result, test_img_names, test_labels, test_accuracy, train_accuracy = cl.start(trainClassesPath, test_path)
+
+        # Si hay una imagen real para analizar
+        if(imgPath is not None):
+            print("Detectada imagen adicional para analizar. \nComenzando deteccion de señales...")
+            # Obtenemos las señales de la imagen y las guardamos en una carpeta para procesarlas
+            imgs = getSignalsFromImg(imgPath)
+            folder = './temporary_test'
+            if not os.path.exists(folder):
+                os.makedirs(folder)
+            else:
+                shutil.rmtree(folder)  # removes all the subdirectories!
+                os.makedirs(folder)
+            for i, img in enumerate(imgs):
+                im = plt.image.imsave(folder+"/image"+str(i)+".png",cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+            # Una vez guardadas las señales reconocidas de la imagen procedemos a clasificarlas --> ToDo
 
         # Graficos
         graphics = Graphics()

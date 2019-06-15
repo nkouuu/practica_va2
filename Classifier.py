@@ -45,17 +45,20 @@ class Classifier:
         train_accuracy = self.get_accuracy(train_result, self.train_labels);
         print(f'Precisión de la predicción del entrenamiento: {train_accuracy} - {train_accuracy*100}%')
 
+        test_result,test_accuracy = self.test()
+        return test_result, self.test_img_names, self.test_labels, test_accuracy*100, train_accuracy*100
+
+    def test(self):
         # Test
         test_samples_list = self.prepare_test(self.test_samples)
         if self.classifier_type == 'LDA-BAYES':
             test_result = self.lda.predict(test_samples_list)
         elif self.classifier_type == 'PCA-BAYES':
             test_result = self.bayes_classifier.predict(test_samples_list)
-        
-        test_accuracy = self.get_accuracy(test_result, self.test_labels);
-        print(f'Precisión de la predicción del test: {test_accuracy} - {"{0:.2f}".format(test_accuracy*100)}%')
 
-        return test_result, self.test_img_names, self.test_labels, test_accuracy*100, train_accuracy*100
+        test_accuracy = self.get_accuracy(test_result, self.test_labels);
+        print(f'Precisión de la predicción del test: {test_accuracy} - {"{0:.2f}".format(test_accuracy * 100)}%')
+        return test_result,test_accuracy
 
     def classify(self,path, type):
         if type == "train":
