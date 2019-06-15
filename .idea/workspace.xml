@@ -2,11 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7d65a9cc-5547-43b7-8171-c3460d9762be" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/detector.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/match.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/peligro.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prohibido.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stop.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../practica1visi/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../practica1visi/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../practica1visi/detector.py" beforeDir="false" afterPath="$PROJECT_DIR$/../practica1visi/detector.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../practica1visi/test/00400.jpg" beforeDir="false" />
@@ -1420,15 +1415,6 @@
       <change beforePath="$PROJECT_DIR$/../practica1visi/venv/lib/python3.7/site-packages/setuptools.pth" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../practica1visi/venv/pip-selfcheck.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../practica1visi/venv/pyvenv.cfg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/practica_va2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/practica_va2.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resultado.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resultado.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -1554,7 +1540,17 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="ProjectPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="practica_va2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="practica_va2" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Course" />
     </panes>
   </component>
@@ -1725,7 +1721,7 @@
       <window_info anchor="bottom" id="Message" order="3" />
       <window_info anchor="bottom" id="Find" order="4" weight="0.3298153" />
       <window_info anchor="bottom" id="Version Control" order="5" />
-      <window_info anchor="bottom" id="Run" order="6" visible="true" weight="0.3657534" />
+      <window_info anchor="bottom" id="Run" order="6" weight="0.3657534" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
@@ -1918,16 +1914,6 @@
     <entry file="file://$PROJECT_DIR$/resultado.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Graphics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1887">
-          <caret line="10" column="16" lean-forward="true" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/detector.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="757">
@@ -1958,12 +1944,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/temporary_test/image1.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/temporary_test/image0.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/temporary_test/image1.png" />
+    <entry file="file://$PROJECT_DIR$/temporary_test/image0.png" />
     <entry file="file://$PROJECT_DIR$/señales.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
